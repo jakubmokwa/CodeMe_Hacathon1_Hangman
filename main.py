@@ -20,25 +20,40 @@ def get_random_word(word_list):
     return random.choice(word_list)
 
 
+def game_end(player_won, game_word):
+    if player_won:
+        print(f"Player won, the word was", end='  ')
+    else:
+        print(f"Pc won, the word was", end='  ')
+    print(*game_word)
+
+
 def game_round(num_of_rounds, game_word, player_word):
     round_num = 0
+    guessed = 0
     while round_num < num_of_rounds:
+        if '_' not in player_word:
+            player_won = 1
+            game_end(player_won, game_word)
+            break
         round_guess = get_guess(game_word, num_of_rounds, round_num)
         round_guess = round_guess.lower()
         if len(round_guess) == 1:
             for index, letter in enumerate(game_word):
                 if letter == round_guess:
                     player_word[index] = round_guess
-                    round_num -= 1
-            if '_' not in player_word:
-                print("Player won")
-                break
+                    guessed = 1
+            if guessed:
+                guessed = 0
+                print(*player_word)
+                continue
         else:
             if list(round_guess) == game_word:
-                print("Player won")
+                player_won = 1
+                game_end(player_won, game_word)
                 break
-        round_num += 1
         print(*player_word)
+        round_num += 1
 
 
 def main():
