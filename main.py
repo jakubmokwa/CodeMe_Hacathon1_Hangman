@@ -35,6 +35,11 @@ def game_end(player_won, game_word):
     print(convert_list_to_string(game_word))
 
 
+def print_previous_letters(past_letter):
+    print("Previous letters/words: ", end="")
+    print(*past_letter)
+
+
 def game_round(num_of_rounds, game_word, player_word):
     round_num = 0
     guessed = 0
@@ -43,8 +48,7 @@ def game_round(num_of_rounds, game_word, player_word):
     past_letter = list()
     while round_num < num_of_rounds:
         if print_past_letter_flag != 0:
-            print("Previous letters: ", end="")
-            print(*past_letter)
+            print_previous_letters(past_letter)
         if '_' not in player_word:
             player_won = 1
             game_end(player_won, game_word)
@@ -60,7 +64,7 @@ def game_round(num_of_rounds, game_word, player_word):
             if guessed:
                 guessed = 0
                 print(*player_word)
-                print_past_letter_flag =1
+                print_past_letter_flag = 1
                 continue
         else:
             if list(round_guess) == game_word:
